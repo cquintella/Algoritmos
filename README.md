@@ -1,6 +1,5 @@
 # Algoritmos
-Material do curso de Algoritmos de Programação em C.
+Material do curso de Algoritmos e Laboratório de Programação (em C).
 
-* Apresentaçõe e snipts de código para uso em programação C.
+* Apresentaçõe e snipts de código.
 * Use por sua conta e risco.
-* Encontrando problemas ou sugerindo melhorias é só avisar que vamos corrigir.
