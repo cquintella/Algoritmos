@@ -1,0 +1,354 @@
+---
+marp: true
+author: carlos.quintella@uva.br
+paginate: true
+theme: gaia
+backgroundColor: white
+
+---
+
+# Controle de fluxo #
+
+Professor: Carlos Alvaro Quintella
+27/02/2023
+
+---
+
+O controle de fluxo é uma técnica utilizada em programação para controlar a ordem de execução de instruções em um programa. 
+Ele é usado para tomar decisões sobre o que o programa deve fazer em diferentes situações.
+
+---
+
+## if () ##
+
+é um comando de controle de fluxo condicional que permite que o programador execute um bloco de código somente se uma determinada condição for verdadeira.
+
+Existem várias variações do comando "if" em C que permitem que o programador execute diferentes ações com base na avaliação da condição. Aqui estão algumas das variações do comando "if" em C:
+
+---
+
+if simples:
+O "if" simples é a forma mais básica de controle de fluxo em C. A sintaxe básica é a seguinte:
+
+````text
+
+if (condicao) {
+  // codigo a ser executado se a condição for verdadeira
+}
+`````
+
+---
+
+if-else:
+O "if-else" permite que o programador execute uma ação se a condição for verdadeira e outra ação se a condição for falsa. A sintaxe básica é a seguinte:
+
+````text
+if (condicao) {
+  // codigo a ser executado se a condição for verdadeira
+} else {
+  // codigo a ser executado se a condição for falsa
+}
+````
+
+---
+
+if-else-if:
+O "if-else-if" é usado quando o programador precisa avaliar várias condições e executar diferentes ações com base na avaliação dessas condições. A sintaxe básica é a seguinte:
+
+````text
+if (condicao1) {
+  // codigo a ser executado se a condição1 for verdadeira
+} else if (condicao2) {
+  // codigo a ser executado se a condição2 for verdadeira
+} else if (condicao3) {
+  // codigo a ser executado se a condição3 for verdadeira
+} else {
+  // codigo a ser executado se nenhuma das condições anteriores for verdadeira
+}
+````
+
+---
+
+if aninhado:
+O "if aninhado" é usado quando o programador precisa avaliar uma condição dentro de outra condição.
+
+* Não é "bonito" usar *if aninhado*, mas não temos como fugir dele algumas vezes, evite então ter mais de três *ifs aninhados*.
+* A sintaxe básica é a seguinte:
+
+````text
+if (condicao1) {
+  if (condicao2) {
+    // codigo a ser executado se a condição1 e a condição2 forem verdadeiras
+  }
+}
+````
+
+---
+
+### Exemplo de *if aninhado* ###
+
+````c
+#include <stdio.h>
+
+int main() {
+    int nota = 4; // número de teclas à direita da nota "C"
+    char letra;
+    
+    if (nota == 0) {
+        letra = 'C';
+    } else if (nota == 1) {
+        letra = 'D';
+    } else if (nota == 2) {
+        letra = 'E';
+    } else if (nota == 3) {
+        letra = 'F';
+    } else if (nota == 4) {
+        letra = 'G';
+    } else if (nota == 5) {
+        letra = 'A';
+    } else if (nota == 6) {
+        letra = 'B';
+    }
+    
+    printf("A nota correspondente é: %c\n", letra);
+    return 0;
+}
+
+````
+
+---
+
+Essas variações do comando "if" em C permitem que o programador controle o fluxo de execução do programa de acordo com as necessidades do programa. É importante escolher a variação adequada para cada situação para garantir que o programa funcione corretamente.
+
+---
+
+````c
+#include <stdio.h>
+int main ()
+{
+   int num;
+   printf ("Digite um numero: ");
+   scanf ("%d",&num);
+   if (num>10)
+       printf ("\n\nO numero e maior que 10");
+       if (num==10){
+         printf ("\n\nVoce acertou!\n");
+         printf ("O numero e igual a 10.");
+        }
+        if (num<10)
+        printf ("\n\nO numero e menor que 10");
+   return(0);
+}
+````
+
+---
+
+Loop é uma estrutura de controle de fluxo que permite executar repetidamente um bloco de código até que uma condição seja satisfeita. O loop infinito ocorre quando a condição de parada nunca é alcançada, fazendo com que o bloco de código seja executado continuamente. Isso é ruim porque pode consumir recursos do sistema e causar travamentos ou falhas no programa.
+
+---
+
+## goto ##
+
+O goto permite transferir o controle de fluxo para uma outra parte do código, especificada por um rótulo. Embora seja uma funcionalidade permitida pela linguagem, goto é considerado uma má prática de programação porque torna o código mais difícil de entender e dar manutenção, podendo levar a problemas como loops infinitos e confusão na lógica do programa.
+
+> O criador da linguagem C, Dennis Ritchie, já afirmou em entrevistas que o uso excessivo de goto pode tornar o código difícil de compreender e depurar, e que a maioria das situações em que o goto é usado podem ser resolvidas por meio de estruturas de controle de fluxo mais claras e intuitivas, como if-else, loops e funções.
+
+---
+
+* Embora o uso de goto seja desencorajado, é possível usá-lo em alguns casos específicos, como em situações de tratamento de erros.
+* **Agora esqueçam que eu ensinei isso!**
+* **Goto pertence ao lado negro da força.**
+![sith symbol](https://duckduckgo.com/i/bc5d4283.png)
+
+---
+
+````c
+#include <stdio.h>
+
+int main() {
+    int idade;
+
+    printf("Digite sua idade: ");
+    scanf("%d", &idade);
+
+    if (idade < 0) {
+        printf("Erro: idade inválida!\n");
+        goto FIM;
+    }
+
+    printf("Sua idade é: %d anos\n", idade);
+
+    FIM:
+    return 0;
+}
+````
+
+---
+
+## for() ##
+
+O Loop for é uma estrutura de controle que permite que um bloco de códgo seja executado diversas vezes.
+
+````text
+for (inicialização; condição; update) {
+    // code block to be executed
+}
+
+````
+
+* Incialização: de uma variável que será incrementada.
+* condição para execução do loop.
+* updade: operaçào que será executada ao fim de cada iteração.
+  
+---
+
+A estrutura básica de um laço for é a seguinte:
+
+1. O contador do laço é inicializado.
+
+2. A condição é avaliada. Se a condição for verdadeira, o laço continuará.
+
+3. O bloco de código dentro do laço é executado.
+4. A expressão de atualização é executada.
+
+5. A condição é avaliada novamente. Se a condição ainda for verdadeira, o laço continuará, caso contrário o laço sairá.
+
+---
+
+## while ##
+
+Executa um bloco de código enquanto uma determinada condição for verdadeira.
+
+`while (condition) {
+    // statements
+}`
+
+---
+
+````c
+#include <stdio.h>
+
+int main() {
+    int i = 1;
+    while (i <= 10) {
+        printf("%d\n", i);
+        i++;
+    }
+    return 0;
+}
+````
+
+---
+
+## do while() ##
+
+Ele executa o bloco de código pelo menos uma vez e, em seguida, verifica a condição de parada antes de decidir se deve continuar a repetir ou não.
+
+````c
+do {
+   statement(s);
+} while (condition);
+````
+
+---
+
+````c
+int main() {
+   int sum = 0, i = 1;
+
+   do {
+      sum += i;
+      i++;
+   } while (i <= 10);
+
+   printf("A soma é: %d\n", sum);
+   return 0;
+}
+
+````
+
+---
+
+## switch ##
+
+Permite escolher entre várias ações com base em uma expressão.
+
+````c
+
+switch (expression) {
+   case value1:
+      statement(s);
+      break;
+   case value2:
+      statement(s);
+      break;
+   ...
+   default:
+      statement(s);
+}
+
+````
+
+---
+
+A expressão dentro do "switch" é avaliada e seu valor é comparado com os valores "value1", "value2", etc. dentro dos casos. Se um dos casos corresponder ao valor da expressão, as instruções dentro desse caso serão executadas. O "break" é usado para sair do "switch" após a execução do caso. Se nenhum dos casos corresponder ao valor da expressão, as instruções dentro do caso "default" serão executadas (se houver um caso "default").
+
+---
+
+````c
+#include <stdio.h>
+#include <string.h>
+
+int main(int argc, char *argv[]) {
+   if (argc < 2) {
+      printf("Usage: %s [OPTION]...\n", argv[0]);
+      return 1;
+   }
+
+   int i;
+   for (i = 1; i < argc; i++) {
+      if (argv[i][0] != '-') {
+         printf("Invalid option: %s\n", argv[i]);
+         return 1;
+      }
+
+      switch (argv[i][1]) {
+         case 'a':
+            printf("Option 'a' selected\n");
+            break;
+         case 'b':
+            printf("Option 'b' selected\n");
+            break;
+         case 'c':
+            printf("Option 'c' selected\n");
+            break;
+         default:
+            printf("Invalid option: %s\n", argv[i]);
+            return 1;
+      }
+   }
+
+   return 0;
+}
+````
+
+---
+
+Neste exemplo, o programa verifica se pelo menos um argumento foi passado. Em seguida, usa um laço para processar cada argumento. Se o argumento começar com "-", é tratado como uma opção e o segundo caractere é verificado com o "switch". Se a opção for válida, uma mensagem é impressa. Caso contrário, uma mensagem de erro é impressa e o programa é encerrado.
+
+---
+
+## Perguntas ##
+
+* O que é um loop infinito e como podemos evitá-lo em um programa em C?
+* Qual é a diferença entre os operadores lógicos "&&" e "||" em C? Dê um exemplo prático de uso.
+* Em um programa com múltiplas condições para serem avaliadas em um bloco "if-else", qual é a ordem de avaliação dessas condições? É possível mudar essa ordem?
+
+---
+
+## Resumo ##
+
+* O controle de fluxo é uma técnica utilizada em programação para controlar a ordem de execução de instruções em um programa.
+* Ele é usado para tomar decisões sobre o que o programa deve fazer em diferentes situações.
+* O comando "if" é uma das variações do controle de fluxo condicional em C, permitindo que o programador execute um bloco de código somente se uma determinada condição for verdadeir
+* Loop é uma estrutura de controle de fluxo que permite executar repetidamente um bloco de código até que uma condição seja satisfeita.
