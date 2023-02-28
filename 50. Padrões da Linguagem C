@@ -1,0 +1,99 @@
+---
+marp: false
+author: carlos.quintella@uva.br
+paginate: true
+theme: gaia
+backgroundColor: white
+---
+
+# Revisão de Programação C #
+
+Professor: Carlos Alvaro Quintella
+27/02/2023
+
+---
+
+## Referencia da linguagem C ##
+
+[Documentação do C na Microsoft](https://learn.microsoft.com/en-us/cpp/c-language/?view=msvc-170)
+
+---
+
+## Comentários ##
+
+O uso de comentários dentro da linguagem de programação é uma prática que facilita a documentação e manutenção do código fonte.
+
+Os comentários em C podem ser incluídos de duas maneiras:
+
+* Uma linha usando [//].
+* Múltiplas linhas [/*] e [*/].
+
+````c
+// Exemplo de uso de comentários.
+
+// Um comentário em uma linha.
+
+/* Já esse comentário
+ acontece em múltiplas linhas */
+
+int main(void) {
+ return 0;
+}
+
+````
+
+---
+
+## Sensibilidae à maiúsculas e minúsculas ##
+
+Para a linguagem C existe diferença para a escrita com letras maiúsculas e minusculas.
+
+````c
+int minhavariavel = 10; // é diferente de:
+char* MinhaVariavel = "Bom dia";
+
+// Variável não pode começar com digitos.
+int 0issonao; 
+````
+
+---
+
+* Os "identificadores" ou "símbolos" são os nomes que você fornece para variáveis, tipos, funções e rótulos em seu programa.
+
+* Os nomes de identificadores devem ser diferentes na ortografia e nas maiúsculas e minúsculas de todas as palavras-chave.
+
+Você não pode usar as [palavras-chave](10.%20padroes_da_linguagem.md#Lista de Palavras-Chave do C) do C como identificadores; elas são reservadas para uso especial.
+
+---
+
+### Lista de Palavras-Chave do C ###
+
+* asm, auto, break, case, catch, char, class, const,
+* continue, default, delete, do, double, else, enum,
+* extern, float, for, friend,goto,if,inline,int,
+* long, new, operator, private, protected, public,
+* register , return, short,signed,sizeof, static,
+* struct, switch, system, template, this, throw, try,typedef,
+* union, unsigned, virtual, void, volatile, while.
+
+---
+
+### Marcação de fim de linha ###
+
+Uma linha de comando do C (declaração) terminam com ;
+
+---
+
+### Blocos de Código ###
+
+Blocos de código são demarcados com [{] e [}].
+
+````c
+//programam: faznada.c
+// Esse programa não faz nada.
+
+int main(void) {
+ return 0; // aqui o ponto e vírgula define o fim da linha.
+}
+
+````
