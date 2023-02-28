@@ -1,0 +1,442 @@
+---
+marp: false
+author: carlos.quintella@uva.br
+paginate: true
+theme: gaia
+backgroundColor: white
+
+---
+
+# Variáveis e Constantes #
+
+Professor: Carlos Alvaro Quintella.
+27/02/2023
+
+---
+
+## Literais ##
+
+literais são valores constantes que são usados diretamente no código-fonte do programa. Esses valores são chamados de "literais" porque são "literais", ou seja, são valores concretos e precisos que não mudam. Os literais em C podem ser de diferentes tipos.
+
+* Ao contrário das variáveis, os literais não têm um endereço de memória atribuído, o que significa que não é possível modificar o valor de um literal depois que ele foi definido.
+
+---
+
+````c
+int x = 10; // Número decimal inteiro.
+int a = 0x10; // Número inteiro hexadecimal.
+char b = 0b10101101; // Número inteiro binário.
+
+float d = 10.01; // Ponto flutuante
+char c='a'; // Caracter
+char *s="String"; // Uma string
+
+````
+
+---
+
+## Variáveis ##
+
+Uma variável é uma posição de memória na qual um programa pode armazenar um valor. Ela é identificada por um nome único e pode ser usada em expressões e instruções no programa. O tipo da variável determina o tipo de dado que ela pode armazenar, como números inteiros, ponto flutuante, caracteres, etc.
+
+---
+
+* Ao atribuir um valor a uma variável, você pode acessá-lo posteriormente e, se necessário, modificá-lo. Isso permite que um programa armazene e acesse informações dinamicamente, tornando possível resolver problemas complexos.
+* Sempre que declaramos uma variável estamos guardando, selecionando ou alocando um espaço de bytes na memória, e dependendo do tipo da variável, o tanto de memória usada varia. Além disso, o tamanho exato dos tipos numéricos em bytes dependem da máquina onde o código está sendo compilado.
+
+---
+
+````c
+// Exemplo de um programa que usa variáveis.
+#include <stdio.h>
+
+int main() {
+   int x;  // Declaração de uma variável inteira chamada x
+   x = 42; // Atribui o valor 42 a x
+   char* greeting; // um ponteiro char para uma string.
+   printf("O valor de x é %d\n", x); // Imprime o valor de x na tela
+   return 0;
+}
+````
+
+````text
++-------------------------+--------------+
+|          42             | 0x7fff5fbffabc
++-------------------------+--------------+
+|           x             | 0x7fff5fbffab8
++-------------------------+--------------+
+|        greeting         | 0x7fff5fbffab0
++-------------------------+--------------+
+|          ...            |      ...     |
+|          ...            |      ...     |
+|          ...            |      ...     |
++-------------------------+--------------+
+
+
+````
+
+---
+
+### O C usa declaração de tipos ###
+
+* Isso caracteriza tipagem forte.
+* Mas é possivel contornar essa necessidade, portanto o **C não é considerado ter tipagem forte**.
+* O compilador vai reclamar, mas o programa pode ser compilado e o codigo gerado vai executar, mas isso pode causar problemas.
+
+````c
+// Exemplo de uso de variáveis.
+int raio_do_circulo = 10;
+char nome[30];
+float temperatura;
+
+````
+
+---
+
+## Tipos de Dados Primários ##
+
+* char (signed, unsigned)
+* float (float, double, long double)
+* int (unsigned int, short int, unsigned short int, long int, unsigned long int, long long int, unsigned long long int)
+
+---
+
+* O C não tem tipo boolean nativo, é preciso usar a lib boolstd.h
+* **void** não pode ser usada como o tipo de uma variável, é usada apenas para indicar que uma função não retorna nenhum valor, ou ou que um ponteiro não tem um tipo específico de dados. Em outras palavras, void é usado para indicar uma ausência de tipo, e não pode ser usado como um tipo real para variáveis.
+
+---
+
+## Tipos de Dados Inteiros ##
+
+| Nome | Tamanho |
+|------|---------|
+|bool * | 1 byte  |
+|char  | 1 byte  |
+|int   | 4 bytes |
+|short | 2 bytes |
+|long  | 8 bytes |
+
+\* bool é usado através de biblioteca.
+
+---
+
+## Tipode de dados de ponto flutuante ##
+
+| Nome | Tamanho |
+|------|---------|
+|float  | 4 bytes  |
+|double  | 8 bytes  |
+|long double *  | 10 bytes |
+
+\* usado para aplicações científicas.
+
+---
+
+## Limite dos tipos de dados basicos ##
+
+* char: -128 a 127 ou 0 a 255, dependendo se o tipo é assinado ou não-assinado;
+* int: -32.768 a 32.767 ou -2.147.483.648 a 2.147.483.647, dependendo do tamanho do tipo;
+* float: cerca de 1,2 × 10^-38 a 3,4 × 10^38, com precisão de 6 dígitos decimais;
+* double: cerca de 2,2 × 10^-308 a 1,8 × 10^308, com precisão de 15 dígitos decimais.
+
+---
+
+## Tipos definidos pelo usuário ##
+
+* enum
+* typedef
+
+---
+
+## Tipos derivados ##
+
+* ponteiro (pointer)
+* vetor (array)
+* struct
+* union
+* modificadores unsigned, signed, long e short
+
+---
+
+### Tamanho de variáveis em C ###
+
+````c
+int main(){
+  printf("Tamanho em bytes de cada tipo:\n");
+  printf ("size of char: %d.\n",sizeof(char));
+  printf ("size of short: %d.\n",sizeof(short));
+  printf ("size of int: %d.\n",sizeof(int));
+  printf ("size of float: %d.\n",sizeof(float));
+  printf ("size of long: %d.\n",sizeof(long));
+  printf ("size of double: %d.\n",sizeof(double));
+  printf ("size of long long int : %d.\n",sizeof(long long int));
+  return 0;
+}
+````
+
+---
+
+````c
+// Uso de variáveis
+
+int preco=100;  // em centavos, para valores monetários use int.
+float temperatura = 36.20f;
+````
+
+---
+
+## Tipos de pontos flutuante ###
+
+| Nome | Tamanho |
+|------|---------|
+| float | 4 bytes |
+| double | 8 bytes |
+| long double | 10 bytes |
+
+---
+
+* void |0| tipo desconhecido
+* O arquivo ''limits.h'' define constantes para os limites de valores aceitos dos tipos inteiros, como ''INT_MIN'', ''LONG_MAX'', etc. No Linux, esse arquivo se encontra em ''/usr/include/limits.h''.
+
+Modificadores:
+
+Funcionam como prefixos para os tipos de dados a serem modificados.
+
+* Unsigned: representa o número sem sinal, com isso aumenta o escopo só para positivos.
+* Long: Aumenta o número de bytes.
+
+---
+
+````c
+
+float tamanho = 10.994;  // valores em ponto flutuante
+char decisao = "y"; // um caractere.
+
+````
+
+---
+
+## Variáveis Globais e Locais ##
+
+Na linguagem de programação C, as variáveis podem ser declaradas dentro ou fora de uma função. 
+* A declaração de uma variável dentro de uma função é conhecida como variável local, 
+* enquanto a declaração de uma variável fora de uma função é conhecida como variável global.
+
+### Cuidados ao utilizar variáveis globais ###
+
+* Embora as variáveis globais sejam convenientes para compartilhar dados entre funções, elas devem ser usadas com cautela, pois podem causar problemas de leitura e escrita em diferentes partes do programa.
+
+* O uso excessivo de variáveis globais pode tornar o código difícil de entender e manter, e também pode levar a erros difíceis de detectar. É importante limitar o uso de variáveis globais apenas quando for absolutamente necessário e sempre lembrar de manter a coesão do código.
+
+---
+
+Variáveis locais:
+
+As variáveis locais são definidas dentro de uma função e têm escopo limitado a essa função. Isso significa que a variável só pode ser acessada dentro da função onde foi declarada e não pode ser acessada em outras funções ou fora da função. Quando a função é chamada, a variável é criada na memória e quando a função retorna, a variável é destruída.
+
+````c
+#include <stdio.h>
+
+int global = 100;
+
+void funcao_exemplo() {
+   int x = 10;
+   printf("O valor de x em funcao_exemplo() é: %d", x);
+   printf("O valor de global em funcao_exemplo() é: %d", global);
+   global++;
+}
+
+int main() {
+   int x = 2;
+   printf("O valor de x em main é: %d", x);
+   printf("O valor de global em main é: %d", global);
+   printf("chamando funcao_exemplo()");
+   funcao_exemplo();
+   printf("O valor de global em main agora é: %d", global);
+   return 0;
+}
+````
+
+---
+
+### Conversão entre tipos ###
+
+Em programamção frequentemente a gente precisa converter um tipo de dado em outro. Por exemplo converter um ponto flutuante para inteiro.
+
+Em C, existem três tipos básicos de conversões de tipo: conversão implícita, conversão cast e conversão explícita.
+
+---
+
+* Conversão implícita: Ocorre automaticamente quando uma expressão é convertida para o tipo necessário para realizar uma operação, sem que haja qualquer indicação explícita da conversão.
+
+````c
+float x = 4.7;
+int y = x;
+
+int num_inteiro = 65;
+char caractere = num_inteiro; // conversão implícita de int para char
+
+float num_float = 10.5;
+double num_double = num_float; // conversão implícita de float para double
+
+char caractere = 'A';
+int codigo_ascii = caractere; // conversão implícita de char para int
+````
+
+---
+
+* Conversão cast: Ocorre quando você usa o operador de cast (tipo) para explicitamente converter um valor de um tipo para outro
+
+````c
+float x = 4.7;
+int y = (int) x;
+````
+
+* Conversão explícita: Ocorre quando você usa funções de conversão explícita, como int(), float(), etc.
+
+````c
+int x = 5;
+float y = (float) x; // conversão cast.
+
+char *str = "123";
+int num_inteiro = atoi(str);
+````
+
+---
+
+````c
+
+char *str = "10.5";
+float num_float = atof(str); // conversão de string para float usando a função atof()
+
+har *str = "3.14159";
+char *str_end;
+double num_double = strtod(str, &str_end); // conversão de string para double usando a função strtod()
+````
+
+É importante ter cuidado ao realizar conversões, pois podem haver perda de precisão ou erros de arredondamento.
+
+---
+
+* Truncation: é o processo de descartar parte dos dados ao converter um tipo de dados para outro tipo com menor tamanho. Por exemplo, ao converter um número inteiro grande para um inteiro de menor tamanho, as informações mais significativas são descartadas e o valor é "truncado".
+
+* Promotion:é o processo oposto, ou seja, a conversão de um tipo de dados para outro tipo com maior tamanho. Por exemplo, ao converter um número inteiro pequeno para um número flutuante de maior tamanho, o valor é "promovido" e mais informações são mantidas.
+  
+>Ambos, truncation e promotion, são tipos de conversões implícitas que ocorrem automaticamente durante a execução do código.
+
+---
+  
+Diferente de outras linguagens a gente precisa inicializar a nova variável criada, isso porque pode ter qualquer coisa no endereço de memória que ela é criada.
+
+---
+
+## sizeof() ##
+
+Podemos descobrir quantos bytes certa variável ocupa através da função sizeof().
+
+* Essa função recebe uma variável como argumento, ou as palavras reservadas que representam as variáveis: char, int, float etc.
+
+---
+
+````c
+#include <float.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+// Identificando os limites das variáveis
+int main(int argc, char** argv) {
+
+    printf("CHAR_BIT    :   %d\n", CHAR_BIT);
+    printf("CHAR_MAX    :   %d\n", CHAR_MAX);
+    printf("CHAR_MIN    :   %d\n", CHAR_MIN);
+    printf("INT_MAX     :   %d\n", INT_MAX);
+    printf("INT_MIN     :   %d\n", INT_MIN);
+    printf("LONG_MAX    :   %ld\n", (long) LONG_MAX);
+    printf("LONG_MIN    :   %ld\n", (long) LONG_MIN);
+    printf("SCHAR_MAX   :   %d\n", SCHAR_MAX);
+    printf("SCHAR_MIN   :   %d\n", SCHAR_MIN);
+    printf("SHRT_MAX    :   %d\n", SHRT_MAX);
+    printf("SHRT_MIN    :   %d\n", SHRT_MIN);
+    printf("UCHAR_MAX   :   %d\n", UCHAR_MAX);
+    printf("UINT_MAX    :   %u\n", (unsigned int) UINT_MAX);
+    printf("ULONG_MAX   :   %lu\n", (unsigned long) ULONG_MAX);
+    printf("USHRT_MAX   :   %d\n", (unsigned short) USHRT_MAX);
+
+    printf("Storage size for float : %d \n", sizeof(float));
+    printf("FLT_MAX     :   %g\n", (float) FLT_MAX);
+    printf("FLT_MIN     :   %g\n", (float) FLT_MIN);
+    printf("-FLT_MAX    :   %g\n", (float) -FLT_MAX);
+    printf("-FLT_MIN    :   %g\n", (float) -FLT_MIN);
+    printf("DBL_MAX     :   %g\n", (double) DBL_MAX);
+    printf("DBL_MIN     :   %g\n", (double) DBL_MIN);
+    printf("-DBL_MAX     :  %g\n", (double) -DBL_MAX);
+    printf("Precision value: %d\n", FLT_DIG );
+    return 0;
+}
+````
+
+---
+
+## Constantes ##
+
+Uma constante em C é um valor que não pode ser alterado durante a execução do programa. É uma forma de garantir que um valor específico seja usado em todo o código, e ajuda a evitar erros de programação causados por mudanças inadvertidas em um valor.
+
+Constantes em C podem ser declaradas de duas formas: com a palavra chave const ou com a clausula de pré processador #define.
+
+---
+
+### Como o modificador **const** ###
+
+const é uma palavra-chave da linguagem C que indica que um valor não pode ser alterado depois que ele é inicializado.
+
+* Quando usamos const, o compilador garante que o valor não será modificado acidentalmente durante a execução do programa. Além disso, a definição de const é feita na compilação e, portanto, há um espaço na memória separado para cada variável const.
+
+---
+
+### Usando a diretiva de préprocessador **#define** ###
+
+**#define** é um pré-processador, não é uma palavra-chave da linguagem C, e é usado para criar constantes simbólicas. Essas constantes são substituídas pelo seu valor correspondente em todo o código, antes da compilação. Isso significa que não há verificação de tipo ou controle de escopo para as constantes definidas por #define.
+
+````c
+#define MAX_PRODS 1024
+
+const int MAX_CLIENTS = 1024;
+````
+
+---
+
+````c
+//soma.c
+#include <stdio.h>
+#include <stdlib.h>
+
+int valor1=0;
+int valor2=0;
+
+int main(int argc, char *argv[ ]){
+    valor1=atoi(argv[1]);
+    valor2=atoi(argv[2]);
+    printf("soma: %d", valor1+valor2);
+    return (0);
+}
+
+````
+
+---
+
+## Perguntas ##
+
+* Quais são os tipos de dados básicos em C?
+* Qual a diferença entre um tipo de dados inteiro e um tipo de dados ponto flutuante?
+* Em que situações é recomendado o uso do tipo de dados unsigned em C e como isso pode afetar o comportamento do programa?
+* Qual a diferença entre o uso de const e #define para criar constantes em C?
+* Em que situações é preferível usar uma variável em vez de uma constante em um programa em C?
+* Quais são as vantagens de usar constantes em vez de valores literais em um programa em C?
+
+---
+
+## Resumo ##
+
+Explicamos que os literais são valores constantes usados diretamente no código-fonte do programa e não podem ser modificados. Em seguida, aborda as variáveis, que são posições de memória em que um programa pode armazenar um valor. As variáveis têm um nome único e um tipo, que determina o tipo de dados que podem armazenar. Quando um valor é atribuído a uma variável, ele pode ser acessado posteriormente e modificado. O tamanho dos tipos numéricos em bytes depende da máquina em que o código está sendo compilado.
+O C usa declaração de tipos, caracterizando tipagem forte, mas é possível contornar essa necessidade. O arquivo também apresenta os tipos de dados primários, incluindo modificadores como "unsigned" e "signed", e os tipos de dados inteiros e de ponto flutuante, indicando seus tamanhos e limites. Por fim, são apresentadas algumas informações adicionais, como a ausência de um tipo boolean nativo no C e o uso de "void" apenas para indicar uma ausência de tipo.
