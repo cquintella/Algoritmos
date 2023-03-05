@@ -1,0 +1,437 @@
+---
+marp: true
+author: caquintella@gmail.com
+paginate: true
+theme: gaia
+backgroundColor: white
+
+---
+
+# String #
+
+Professor: Carlos Alvaro Quintella
+
+---
+
+Strings em C são arrays de caracteres **Terminadas em nulo: [\0]**.
+
+````text
++--------------------+
+|0|1|2|3|4|5|6|7|8|9 |
++--------------------+
+|O|L|A| |M|U|N|D|O|\0|
++--------------------+
+````
+
+---
+
+> O caractere nulo \0 (também chamado de terminador de string) não é visível diretamente ao imprimir a string com printf ou ao visualizar a string em um depurador. O caractere nulo é usado pelos programas para indicar o final de uma string, mas ele não é um caractere imprimível, portanto, não é exibido na tela.
+> Para verificar a presença do caractere nulo no final de uma string, você pode usar uma função de manipulação de strings, como strlen. A função strlen retorna o número de caracteres na string até (mas não incluindo) o caractere nulo. Se a string foi corretamente terminada com um caractere nulo, então o valor retornado por strlen será igual ao número de caracteres que você inseriu na string.
+
+---
+
+````c
+
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+
+  char sobrenome[] = "Fulaninho";
+
+  printf("%s\n", sobrenome);
+
+  // verifica o tamanho da string
+  int tamanho = strlen(sobrenome);
+
+  // verifica se o último caractere é nulo
+  if (sobrenome[tamanho] == '\0') {
+    printf("A string está terminada com nulo\n");
+  } else {
+    printf("A string não está terminada com nulo\n");
+  }
+
+  return 0;
+}
+````
+
+---
+
+## Biblioteca string ##
+
+````c
+#include <string.h>
+
+// Um array de char
+char *greetings="Hello";
+
+````
+
+---
+
+## Criando strings ##
+
+Você pode criar uma string de diferentes formas:
+
+````c
+char minha_string[]="texto";
+char minha_string[30]="Esse texto tem no max. 30 charac.";
+char *ptr_para_string="Uma string na memória";
+
+````
+
+---
+
+````c
+#include <stdio.h>
+
+int main(void) {
+
+  char *nome="Jonas";
+  char sobrenome[]="Schawtzman";
+  char nome_mae[30] = {'J','u','l','i','a','n','a'};
+  
+  printf("%s : %d\n",nome,sizeof(nome));
+  printf("%s : %d\n",sobrenome,sizeof(sobrenome));
+  printf("%s : %d\n",nome_mae,sizeof(nome_mae));
+  return 0;
+}
+````
+
+---
+
+* O número retornado por sizeof da string nome não é o número de caracteres mais o \0 porque nome é um ponteiro para uma string literal. Quando você declara uma string como char *nome="nome", o compilador aloca memória para a string literal "nome" em uma área de memória separada, e então atribui o endereço dessa área de memória ao ponteiro nome.
+* O tipo do ponteiro nome é char *, que tem tamanho fixo independentemente da string que ele aponta. Portanto, sizeof(nome) retorna o tamanho do ponteiro, que é geralmente 4 ou 8 bytes, dependendo da arquitetura do computador.
+
+---
+
+* Por outro lado, sobrenome é um array de caracteres, que é alocado em tempo de compilação ou de execução na pilha do programa. Quando você declara um array como char sobrenome[]="Fulaninho", o compilador reserva espaço suficiente na pilha para acomodar a string literal "Fulaninho" mais o caractere nulo \0 ao final.
+* Então, sizeof(sobrenome) retorna o tamanho total do array, que é o tamanho da string "Fulaninho" mais 1 para o caractere nulo \0.
+* Já nome_mae tem tamanho 30, que é o tamnho do vetor que criamos*/
+
+---
+
+### Exemplo de letura e escrita de dados com scanf e printf ###
+
+````c
+// vcard.c: Imprime um vcard.
+
+#include <stdio.h>
+
+int main() {
+    char nome[100], sobrenome[100], email[100];
+
+    printf("Digite o nome: ");
+    scanf("%s", nome);
+
+    printf("Digite o sobrenome: ");
+    scanf("%s", sobrenome);
+
+    printf("Digite o e-mail: ");
+    scanf("%s", email);
+
+    printf("BEGIN:VCARD\n");
+    printf("VERSION:2.1\n");
+    printf("N:%s;%s;;;\n", sobrenome, nome);
+    printf("FN:%s %s\n", nome, sobrenome);
+    printf("EMAIL;INTERNET:%s\n", email);
+    printf("END:VCARD\n");
+
+    return 0;
+}
+````
+
+---
+
+>O vCard é um formato de arquivo padrão usado para armazenar e trocar informações de contato entre diferentes aplicativos, sistemas operacionais e dispositivos. Ele permite que os usuários compartilhem informações de contato, como nome, endereço, número de telefone, endereço de e-mail, entre outras informações importantes de contato.
+> O formato vCard é amplamente utilizado por aplicativos de gerenciamento de contatos e clientes de e-mail, permitindo que as informações de contato sejam facilmente importadas e exportadas entre diferentes plataformas. Ele foi desenvolvido pela Internet Engineering Task Force (IETF) como uma solução padronizada para a troca de informações de contato.
+
+---
+
+## Operações sobre strings ##
+
+````c
+// Lê string do teclado.
+int main(void){
+  char minha_str[];
+  scanf("%s", minha_str);
+  printf("%s",minha_str);
+  return (0);
+}
+````
+
+* O **scanf()** tem um problema sério, que é não limitar o tamanho da leitura.
+* O C11 temos scanf_s que é uma implementação masi segura, onde passamos o tamnho do buffer.
+
+---
+
+### Obter tamanho de uma string ###
+
+**strlen()**:  retorna o comprimento de uma string, ou seja, o número de caracteres que a string contém, sem contar o caractere nulo ('\0') no final da string.
+
+````c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+  char str[] = "Hello, World!";
+  int len = strlen(str);
+  printf("Comprimento da string: %d\n", len);
+  return 0;
+}
+````
+
+>sizeof e strlen são duas funções em C que têm propósitos diferentes.
+> A função sizeof retorna o tamanho em bytes de um determinado tipo de dado ou variável. Por exemplo, sizeof(int) retorna o tamanho em bytes do tipo int e sizeof(char) retorna o tamanho em bytes do tipo char. sizeof é uma operação de tempo de compilação, o que significa que o tamanho é determinado em tempo de compilação e é conhecido em tempo de execução.
+> Por outro lado, a função strlen retorna o comprimento de uma string, ou seja, o número de caracteres na string até (mas não incluindo) o caractere nulo \0. A função strlen é usada principalmente para determinar o tamanho de uma string dinamicamente alocada em tempo de execução.
+>Enquanto sizeof retorna o tamanho total em bytes de um tipo de dado ou variável, strlen retorna apenas o número de caracteres na string. Além disso, sizeof é determinado em tempo de compilação, enquanto strlen é determinado em tempo de execução.
+>Em resumo, sizeof é usado para determinar o tamanho em bytes de um tipo de dado ou variável em tempo de compilação, enquanto strlen é usado para determinar o comprimento de uma string em tempo de execução.
+
+---
+
+### Concatenação ###
+
+**strcat()**: é uma função da biblioteca string.s, que concatena duas strings. Ela adiciona os caracteres da segunda string ao final da primeira string, incluindo o caractere nulo ('\0') no final da string resultante.
+
+````text
+char *strcat(char *dest, const char *src);
+
+ char nome[], sobre[];
+    +-+-+-+-+-+-+--+ +-+-+-+-+-+--+
+    |M|a|c|a|c|o|\0| |P|r|e|g|o|\0|
+    +-+-+-+-+-+-+--+ +-+-+-+-+-+--+
+````
+
+---
+
+````text
+strcat(nome,sobre);
+
+depois de executar, teremos
+- nome: "MacacoPrego".
+- sobre: "Prego"
+
+````
+
+---
+
+### Exemplo strcat() ###
+
+````c
+char str1[20] = "Hello ";
+char str2[] = "World!";
+
+// Concatenate str2 to str1 (result is stored in str1)
+strcat(str1, str2);
+
+// Print str1
+printf("%s", str1);
+
+````
+
+---
+
+## Comparar Strings ##
+
+**strcmp()**: compara duas strings. Ela retorna um inteiro que indica se a primeira string é menor, igual ou maior que a segunda string.
+
+````text
+int strcmp(const char *s1, const char *s2);
+
+Onde s1 e s2 são os ponteiros para as duas strings que você deseja comparar.
+````
+
+---
+
+````c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+  char str1[] = "";
+  char str2[] = "";
+  printf ("Digite a primeira string:");
+  printf ("Digite a segundaa string:");
+  scanf("%s",str1);
+  scanf("%s",str2);
+  
+  int result = strcmp(str1, str2);
+  if (result == 0) {
+    printf("As strings são iguais\n");
+  } else if (result < 0) {
+    printf("str1 é menor que str2\n");
+  } else {
+    printf("str1 é maior que str2\n");
+  }
+  return 0;
+}
+````
+
+---
+
+## Copiar valor de uma string para outra ##
+
+**strcpy()**: copia uma string para outra. Ela copia todos os caracteres da primeira string para a segunda string, incluindo o caractere nulo ('\0') no final da string.
+
+````c
+char str1[20] = "Hello World!";
+char str2[20];
+
+// Copy str1 to str2
+strcpy(str2, str1);
+
+// Print str2
+printf("%s", str2);
+
+````
+
+---
+
+````c
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+  char src[] = "Hello, World!";
+  char dest[20];
+  strcpy(dest, src);
+  printf("String de destino: %s\n", dest);
+  return 0;
+}
+
+````
+
+---
+
+### Buscar um caracter na string ###
+
+**strch()**:procura por um determinado caractere em uma string. Ela retorna um ponteiro para a primeira ocorrência desse caractere na string, ou NULL se o caractere não for encontrado.
+
+````text
+char *strchr(const char *str, int c);
+````
+
+---
+
+````c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+  char str[] = "Hello, World!";
+  char ch = 'o';
+  char *ptr = strchr(str, ch);
+  if (ptr) {
+    printf("Caractere '%c' encontrado em '%s' na posição %ld\n", ch, str, ptr - str);
+  } else {
+    printf("Caractere '%c' não encontrado em '%s'\n", ch, str);
+  }
+  return 0;
+}
+````
+
+---
+
+### Busca de substring em uma string ###
+
+**strstr()**:procura por uma substring em uma string. Ela retorna um ponteiro para a primeira ocorrência da substring na string, ou NULL se a substring não for encontrada.
+
+````text
+char *strstr(const char *haystack, const char *needle);
+````
+
+````c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+  char haystack[] = "Hello, World!";
+  char needle[] = "World";
+  char *ptr = strstr(haystack, needle);
+  if (ptr) {
+    printf("Substring '%s' encontrada em '%s' na posição %ld\n", needle, haystack, ptr - haystack);
+  } else {
+    printf("Substring '%s' não encontrada em '%s'\n", needle, haystack);
+  }
+  return 0;
+}
+````
+
+---
+
+### Caracteres de escape ###
+
+* \n: Nova linha
+* \r: Retorno de carro
+* \t: Tabulação horizontal
+* \v: Tabulação vertical
+* \b: Retrocesso (backspace)
+* \f: Avanço de página
+* \\: Barra invertida (para imprimir uma barra invertida na saída)
+* \': Aspas simples (para imprimir uma aspas simples na saída)
+* \": Aspas duplas (para imprimir aspas duplas na saída)
+* \%: Porcentagem (para imprimir um símbolo de porcentagem na saída)
+
+---
+
+### Mais umas brincadeiras com string ###
+
+````c
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+   char entrada[100];
+   int tamanho;
+   
+   printf("Digite uma palavra ou frase: ");
+   fgets(entrada, 100, stdin);
+   
+   printf("A entrada original é: %s", entrada);
+   
+   // Converter a string para maiúsculas
+   for (int i = 0; i < strlen(entrada); i++) {
+      entrada[i] = toupper(entrada[i]);
+   }
+   
+   printf("A entrada em maiúsculas é: %s", entrada);
+   
+   // Inverter a string
+   strrev(entrada);
+   
+   printf("A entrada invertida é: %s", entrada);
+   
+   // Imprimir o tamanho da string
+   tamanho = strlen(entrada);
+   printf("O tamanho da string é: %d\n", tamanho);
+   
+   // Imprimir uma palavra por linha da string
+   char *token = strtok(entrada, " ");
+   while (token != NULL) {
+      printf("%s\n", token);
+      token = strtok(NULL, " ");
+   }
+   
+   return 0;
+}
+````
+
+---
+
+### fflush() ###
+
+A função fflush é utilizada para descartar qualquer conteúdo restante no buffer de saída de um fluxo de arquivo (stream), ou seja, para forçar a saída de qualquer informação armazenada no buffer para o dispositivo de saída correspondente.
+
+> A função scanf já realiza a limpeza do buffer de entrada (stdin) antes de aguardar a entrada do usuário, portanto não há necessidade de utilizar fflush nesse caso.
+
+---
+
+A principal situação em que se utiliza a função fflush é quando se está trabalhando com arquivos e se deseja forçar a escrita dos dados contidos no buffer para o arquivo antes de fechar o arquivo.
+
+Por exemplo, imagine que você esteja escrevendo um programa em C que grava informações em um arquivo de texto. Após escrever as informações no arquivo, é recomendável usar a função fflush para garantir que todos os dados sejam escritos no arquivo antes de fechar o arquivo com a função fclose.
+
+Outra situação em que a função fflush pode ser utilizada é quando se está trabalhando com saída de dados em buffer em programas que não sejam de arquivo, como ao enviar dados para uma impressora, tela ou socket.
+
+Em resumo, a função fflush é utilizada para forçar a saída de dados armazenados em buffer, e é geralmente usada em operações de arquivo ou saída de dados em buffer em programas não relacionados a arquivos.
