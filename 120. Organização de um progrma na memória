@@ -1,0 +1,104 @@
+---
+marp: true
+author: carlos.quintella@uva.br
+backgroundColor: white
+paginate: true
+theme: gaia
+---
+
+# Organização do Programa C na Memória #
+
+![segmentação da memória de um programam C](https://www.inf.ufpr.br/roberto/ci067/pics/areas-memoria.png)
+
+fonte: Sistemas Operacionais: Conceitos e Mecanismos, Cap 15.
+
+---
+
+````text
++------------+
+|   STACK    | dados de funcs., parâm., end de ret.
++------------+
+|    ...     | área livre
+|    ...     | 
++------------+
+|    HEAP    | variáveis dinâmicas
++------------+
+|    BSS     | variáveis não inicializadas
++------------+
+|    DATA    | variáveis inicializadas
++------------+
+|    TEXT    | código binário
++------------+
+````
+
+---
+
+## Text ##
+
+Contém o código binário a ser executado pelo processo, gerado durante a compilação e a ligação com as  bibliotecas e armazenado no arquivo executável. Esta seção se situa no início do espaço de endereçamento do processo e tem tamanho fixo, calculado durante a compilação.
+
+---
+
+## Data ##
+
+Esta seção contém as variáveis estáticas inicializadas, ou seja, variáveis que estão definidas do início ao fim da execução do processo e cujo valor inicial é declarado no código-fonte do programa. Esses valores iniciais são armazenados no arquivo do programa executável, sendo então carregados para esta seção de memória quando o processo inicia. Nesta seção são armazenadas tantovariáveis globais quanto variáveis locais estáticas (por exemplo, declaradas
+como static em C).
+
+---
+
+## Stack ##
+
+A PILHA (stack) é uma umas estrutura de dados FIFO (first-inFirst-out), que é usada para guardar as vairiáveis usadas **dentro de uma função**, além do endereço de retorno quando a função acabar.
+
+* Sempre que uma função declarar uma nova variável ela é alocada na Pilha. A pilha "cresce" do endereço maior para o menor, em direção a área de memória do HEAP.
+* Quando a função retorna as variáveis são desempilhadas.
+
+---
+
+## Heap ##
+
+O HEAP está no endereçamento oposto ao stack, é um pedaço de memória usado para alocação dinâmica – é conhecido tv como “free store”. Esse pedaço da memória nao é gerenciado automaticamente, requer que o usuario use explicitmente comandos de alocação e desaloção de memoria (malloc e free).
+
+---
+
+## BSS ##
+
+Historicamente chamada de Block Started by Symbol, esta seção contém as variáveis estáticas não-inicializadas. Esta seção é separada da seção DATA porque as variáveis inicializadas precisam ter seu valor inicial armazenado no arquivo executável, o que não é necessário para as variáveis não-inicializadas. Com essa separação de variáveis, o arquivo executável fica menor.
+
+---
+
+## Static ##
+
+A memória estática persiste durante toda a vida do programa, é usada para armazenar variáveis globais ou variáveis criadas com a a cláusula static.
+
+---
+
+## Resumo ##
+
+Sobre a organização do programa C na memória. Existem várias seções na memória que são usadas para diferentes fins:
+
+Text: contém o código binário a ser executado pelo processo, gerado durante a compilação e a ligação com as bibliotecas.
+Data: contém as variáveis estáticas inicializadas, ou seja, variáveis que estão definidas do início ao fim da execução do processo e cujo valor inicial é declarado no código-fonte do programa.
+Stack: é uma estrutura de dados FIFO (first-in-first-out), que é usada para guardar as variáveis usadas dentro de uma função, além do endereço de retorno quando a função acabar.
+
+---
+
+Heap: é um pedaço de memória usado para alocação dinâmica – é conhecido como “free store”. Esse pedaço da memória não é gerenciado automaticamente, requer que o usuário use explicitamente comandos de alocação e desalocação de memória (malloc e free).
+BSS: contém as variáveis estáticas não-inicializadas. Esta seção é separada da seção DATA porque as variáveis inicializadas precisam ter seu valor inicial armazenado no arquivo executável, o que não é necessário para as variáveis não-inicializadas.
+Static: a memória estática persiste durante toda a vida do programa e é usada para armazenar variáveis globais ou variáveis criadas com a cláusula static.
+
+---
+
+## Perguntas ##
+
+* Quais são as seções principais da memória de um programa C?
+* O que é armazenado na seção TEXT?
+* O que são variáveis estáticas e onde elas são armazenadas?
+* O que é a pilha (stack) e para que ela é usada na execução de um programa C?
+* O que é o heap e como ele é gerenciado em um programa C?
+
+---
+
+## Links Adicionais ##
+
+* [Stack e Stack Overflow](https://www.youtube.com/watch?v=jVzSBkbfdiw)
