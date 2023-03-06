@@ -1,0 +1,234 @@
+---
+marp: true
+author: carlos.quintella@UVA.br
+paginate: true
+theme: gaia
+backgroundColor: white
+---
+
+# Vetores (Array) #
+
+É uma estrutura de dados "do mesmo tipo" que *permite o acesso a cada elemento através de um índice*.
+
+* O primeiro elemento do array é o índice [0];
+* Portanto o último elemento do vetor é acessado pelo indice de é seu tamanho -1.
+
+````text
+Representação de um array de 4 elementos int:
++---+---+---+---+
+| 5 |172| 21| 93|
++---+---+---+---+
+ (0) (1) (2) (3)
+
+````
+
+---
+
+````c
+#include <stdio.h>
+int main(void){
+    int array[6] = {1, 2, 3, 4, 5, 6};
+    printf("%d,%d,%d,%d,%d,%d.\n",    array[0],array[1],array[2],array[3],array[4],array[5]);
+  }
+// saida: 1,2,3,4,5,6.
+
+````
+
+---
+
+Array na stack.
+
+````text
++----------------------+
+| array[5] = 6         |  <- endereço base + 20 bytes (0x7fff0014)
++----------------------+
+| array[4] = 5         |  <- endereço base + 16 bytes (0x7fff0010)
++----------------------+
+| array[3] = 4         |  <- endereço base + 12 bytes (0x7fff000c)
++----------------------+
+| array[2] = 3         |  <- endereço base + 8 bytes (0x7fff0008)
++----------------------+
+| array[1] = 2         |  <- endereço base + 4 bytes (0x7fff0004)
++----------------------+
+| array[0] = 1         |  <- endereço base (0x7fff0000)
++----------------------+
+`````
+
+---
+
+
+## Como usar um array ##
+
+* Ao criar um array, é importante lembrar de inicializa-lo. 
+> Lembra que em C ao criar uma variável, ele aloca um espaço de memória que pode ter lixo guardado.
+* Podemos criar vetores de diferentes formas:
+
+````c
+// inicialização direta.
+#define TAMANHO 5
+char array_pequeno[4] = {"0","1","2","3"};
+int number[TAMANHO] =  { 1,2,3,4,5};
+
+// inicialização com laços
+int vetor[5];
+for (int i = 0; i < 5; i++) {
+    vetor[i] = i + 1;
+}
+
+// Inicialização com macro
+// essa sintaxe é relativamente recente na linguagem C, 
+/// e pode não estar disponível em todas as versões ou compiladores da linguagem.
+
+int vetor[TAMANHO] = {[0 ... 4] = 1};
+//inicializa com zeros.
+int vetor[TAMANHO] = {[0 ... TAMANHO-1] = 0};
+````
+
+---
+
+````c
+
+//inicializa_array.c
+// Exemplo de inicializacao de um array
+#include <stdio.h>
+
+int main(void)
+{
+
+    int numberArray[10], counter;
+
+    for(counter = 0 ; counter < 5 ; counter++)
+    {
+        numberArray[counter] = 0;
+    }
+    printf("Array elements are:\n");
+    for(counter=0; counter<5; counter++)
+    {
+        printf("%d",numberArray[counter]);
+    }
+    return 0;
+}
+````
+
+---
+
+## Percorrendo o vetor ##
+
+Percorrer um vetor em C significa acessar cada um de seus elementos em sequência. Isso é geralmente feito usando um loop, como o for, e um índice que varia de 0 até o comprimento do vetor menos 1.
+
+---
+
+## Uma string é um array de caracteres ##
+
+````text
+Representação de uma string:
+ +---+---+---+---+---+---+---+---+
+ | P | E | A | N | U | T | S |\0 |
+ +---+---+---+---+---+---+---+---+
+  (0) (1) (2) (3) (4) (5) (6) (7)
+````
+
+---
+
+### Passando array como parametro ###
+
+* Em C a gente pode passar um array como parâmetro de uma função de diferentes maneiras.
+* Um vetor não armazena informações sobre seu próprio tamanho, portanto, é necessário passar o tamanho do vetor como um argumento para uma função que precisa acessá-lo.
+---
+
+#### Diferentes formas de passar um vetor como parâmetro ####
+
+````c
+// Como um ponteiro para o primeiro elemento
+
+void minha_funcao(int *array, int tamanho) {
+    // código que usa o array
+}
+
+int main() {
+    int meu_array[] = {1, 2, 3, 4, 5};
+    int tamanho = 5;
+
+    minha_funcao(meu_array, tamanho);
+
+    return 0;
+}
+````
+
+---
+
+````c
+//Como um array e tamanho
+
+void minha_funcao(int array[], int tamanho) {
+    // código que usa o array
+}
+
+int main() {
+    int meu_array[] = {1, 2, 3, 4, 5};
+    int tamanho = 5;
+
+    minha_funcao(meu_array, tamanho);
+
+    return 0;
+}
+
+
+````
+
+---
+
+Vetores tem tamanho fixo em C se você precisar aumenta-lo para adicionar mais elementos tem que criar um novo vetor e copiar os elementos antigos para ele e depois adicionar os novos.
+
+````c
+#include <stdio.h>
+#define MAX_TEMP 5
+
+int main() {
+    float temperaturas[MAX_TEMP] = {23.4, 24.1, 22.9, 21.5, 23.0};
+    float temperaturas_expandido[10];
+    
+    // Copia os valores do vetor original para o novo vetor
+    for (int i = 0; i < MAX_TEMP; i++) {
+        temperaturas_expandido[i] = temperaturas[i];
+    }
+    temperaturas_expandido[6]=24.7;
+    temperaturas_expandido[7]=23.2;
+    temperaturas_expandido[8]=25.6;
+    temperaturas_expandido[9]=21.0;
+    
+    // Imprime o novo vetor
+    for (int i = 0; i < 10; i++) {
+        printf("%.1f ", temperaturas_expandido[i]);
+    }
+    
+    return 0;
+}
+
+```` 
+
+---
+
+## Exercício ##
+
+1. Pergunte para 5 colegas qual a altura deles. 
+2. Faca um programa para carregar do teclado em um vetor as alturas, e em seguida calcule a média.
+
+---
+
+## Resumo ##
+
+* Explicamos que um vetor é uma estrutura de dados do mesmo tipo que permite o acesso a cada elemento através de um índice, onde o primeiro elemento é o índice [0] e o último é acessado pelo índice de seu tamanho -1.
+* Em seguida, é apresentamos um exemplo de código em C para criar um vetor e imprimir seus valores na tela.
+* Mostramos como usar um vetor, incluindo a importância de inicializá-lo corretamente e como fazer isso usando diferentes métodos, como a inicialização direta, com loops ou macros.
+* apresentamos como percorrer um vetor em C.
+
+---
+
+## Perguntas ##
+
+* Como inicializar um vetor em C?
+* Qual é a sintaxe para acessar um elemento específico de um vetor?
+* Como percorrer todos os elementos de um vetor em C?
+* É possível ter um vetor de diferentes tipos de dados em C?
+* É possível passar um vetor como argumento para uma função em C? Como isso é feito?
