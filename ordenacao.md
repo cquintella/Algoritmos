@@ -1,0 +1,218 @@
+
+
+
+---
+marp: true
+author: caquintella@gmail.com
+backgroundColor: white
+paginate: true
+theme: default
+
+---
+
+# Algoritmos de Ordenação #
+
+Professor: Carlos Alvaro Quintella
+
+---
+
+
+um algoritmo de ordenação é um conjunto de instruções que permitem que você organize
+um conjunto de dados de acordo com um critério específico, como ordem alfabética, numérica
+ou por tamanho. Isso pode ser útil em uma variedade de aplicações, como classificar uma lista
+de nomes em ordem alfabética, classificar um conjunto de dados numéricos em ordem crescente ou
+decrescente ou organizar arquivos em um sistema de arquivos.
+* Fornecer alicerce para acesso a dados de forma eficiente.
+
+---
+
+Áreas de Aplicação:
+
+* Bancos de dados: Quando os dados são armazenados em um banco de dados, é necessário classificá-los  para facilitar a busca e a recuperação. Os algoritmos de ordenação são usados para classificar os dados em ordem crescente ou decrescente.
+* Sistemas operacionais: Os sistemas operacionais precisam classificar processos ou arquivos em diferentes estados ou prioridades. Algoritmos de ordenação são usados para classificar esses processos ou arquivos.
+* Pesquisa na web: Os resultados da pesquisa na web são geralmente classificados em ordem de relevância  para o usuário. Os algoritmos de ordenação são usados para classificar os resultados da pesquisa com base em sua relevância.
+
+---
+
+* Computação gráfica: Em jogos de computador, os objetos são renderizados em ordem de profundidade. Os algoritmos de ordenação são usados para determinar a ordem em que os objetos devem ser renderizados para que pareçam corretos na tela.
+* Machine Learning: Algoritmos de ordenação também são usados na fase de pré-processamento de dados em tarefas de aprendizado de máquina. Por exemplo, quando um conjunto de dados é ordenado por classe, pode-se separar facilmente os dados para treinamento e teste.
+
+
+
+
+
+## Tipos de Ordenação ##
+
+* Numérica
+* Lexicográfica
+* Independente
+
+## InsertionSort ##
+
+O Insertion Sort percorre o vetor, inserindo cada elemento na posição correta em uma sublista ordenada à esquerda. A sublista ordenada começa com apenas o primeiro elemento do vetor e cresce a cada iteração.
+
+PSeudo-código:
+
+````text
+função insertion_sort(vetor):
+    n = tamanho(vetor)
+    para i de 1 até n-1:
+        valor_atual = vetor[i]
+        posição = i
+        
+        enquanto posição > 0 e vetor[posição-1] > valor_atual:
+            vetor[posição] = vetor[posição-1]
+            posição = posição - 1
+        
+        vetor[posição] = valor_atual
+````
+
+---
+
+````c
+
+void insertion_sort(int tabela[], int largura){
+   int i, memoria, contador; 
+   bool marcador; 
+   for(i=1; i<largura; i++){
+      memoria = tabela[i];
+      contador = i-1;
+      do{
+         marcador = false;
+         if(tabela[contador] > memoria){
+            tabela[contador+1] = tabela[contador];
+            contador--;
+            marcador = true;
+         }
+         if(contador < 0) marcador = false;
+      }while(marcador);
+   }
+   tabela[contador+1] = memoria;
+}
+````
+
+---
+
+## Selection Sort ##
+
+O Selection Sort procura o menor elemento do vetor e o coloca na primeira posição, depois procura o próximo menor elemento e o coloca na segunda posição, e assim por diante.
+
+Pseudo-código:
+
+````text
+função selection_sort(vetor):
+    n = tamanho(vetor)
+    para i de 0 até n-1:
+        índice_menor = i
+        para j de i+1 até n-1:
+            se vetor[j] < vetor[índice_menor]:
+                índice_menor = j
+        trocar vetor[i] com vetor[índice_menor]
+
+````
+
+---
+
+````c
+void selectionSort3( int vetorDesordenado[], int tamanhoVetor ){ //Funçao selection recebendo vetor e tamanho
+   int i, j, posicaoValorMinimo;
+   for (i = 0; i < ( tamanhoVetor - 1 ); i++){ //Loop para percorrer o vetor
+      posicaoValorMinimo = i; //O valor minimo de posiçao do vetor a ser percorrido e 0
+      for (j = ( i + 1 ); j < tamanhoVetor; j++){      //Percorreremos o vetor da posiçao 1 ate o tamanho estimado 
+         if( vetorDesordenado[j] < vetorDesordenado[posicaoValorMinimo]){ //Se a posiçao que vamos verificar for menos que a posiçao que temos em maos
+            posicaoValorMinimo = j; //A variavel 'j' recebe esse valor
+         }
+      }
+      if ( i != posicaoValorMinimo ){
+         trocarPosicaoValores( &vetorDesordenado[i], &vetorDesordenado[posicaoValorMinimo] );//vamos chamar uma outra funçao para trocar as posiçoes de lugares  
+      }
+   }
+}
+
+void trocarPosicaoValores( int *posicaoA, int *posicaoB ){ //Funçao para trocar as posiçoes que estamos olhando
+   int temporario;
+   temporario = *posicaoA;
+   *posicaoA = *posicaoB;
+   *posicaoB = temporario;     
+}
+````
+
+---
+
+## Bubble sort ##
+
+O Bubble Sort compara cada par de elementos adjacentes e troca-os se estiverem fora de ordem. Ele repete este processo várias vezes até que não haja mais trocas a serem feitas.
+
+Pseud-código:
+
+````text
+
+função bubble_sort(vetor):
+    n = tamanho(vetor)
+    para i de 0 até n-1:
+        para j de 0 até n-i-1:
+            se vetor[j] > vetor[j+1]:
+                trocar vetor[j] com vetor[j+1]
+
+````
+
+---
+
+````c
+void BubbleSort(int vetor[], int tamanho){
+   int memoria, troca, i, j;
+   troca=1; /*A variável "troca" será a verificação da troca em cada passada*/
+   for(j=tamanho-1; (j>=1) && (troca==1); j--){
+      troca=0; /*Se o valor continuar 0 na próxima passada quer dizer que não houve troca e a função é encerrada.*/
+      for(i=0; i<j; i++){
+            if(vetor[i]>vetor[i+1]){
+               memoria=vetor[i];
+               vetor[i]=vetor[i+1];
+               vetor[i+1]=memoria;
+               troca=1; /*Se houve troca, "troca" recebe 1 para continuar rodando.*/
+         }
+      }
+   }
+}
+````
+
+---
+
+Cada algoritmo de ordenação tem suas próprias vantagens e desvantagens. Aqui está uma breve visão geral das características de cada um dos três algoritmos mencionados anteriormente:
+
+* Bubble Sort:
+*Vantagens*: É fácil de entender e implementar, e funciona bem em conjuntos de dados pequenos.
+*Desvantagens*: É muito lento em conjuntos de dados grandes e não é eficiente em termos de tempo de execução, pois tem uma complexidade de tempo O(n^2) no pior caso.
+
+* Selection Sort:
+*Vantagens*: É fácil de entender e implementar, e funciona bem em conjuntos de dados pequenos. Tem uma complexidade de tempo de execução O(n^2) no pior caso, o que o torna adequado para conjuntos de dados de tamanho moderado.
+*Desvantagens*: É muito lento em conjuntos de dados grandes e não é eficiente em termos de tempo de execução.
+
+* Insertion Sort:
+*Vantagens*: É fácil de entender e implementar e é muito eficiente em conjuntos de dados pequenos. Tem uma complexidade de tempo de execução O(n^2) no pior caso, mas é mais rápido que os outros dois algoritmos nessa categoria.
+*Desvantagens*: É muito lento em conjuntos de dados grandes e não é eficiente em termos de tempo de execução.
+
+Em geral, esses algoritmos de ordenação são adequados para conjuntos de dados pequenos ou moderados, mas não são ideais para conjuntos de dados grandes. Para conjuntos de dados maiores, é melhor usar algoritmos de ordenação mais avançados, como Merge Sort, Quick Sort ou Heap Sort, que têm complexidade de tempo de execução mais eficiente. A escolha do algoritmo adequado depende da natureza do conjunto de dados e dos requisitos específicos de desempenho do programa.
+
+---
+
+Esses são três algoritmos de ordenação mais avançados e eficientes em termos de tempo de execução do que os algoritmos de ordenação simples que mencionei anteriormente. Aqui está uma breve explicação de cada um:
+
+Merge Sort:
+O Merge Sort é um algoritmo de ordenação recursivo que divide o conjunto de dados em duas metades, ordena cada metade e, em seguida, combina as duas metades ordenadas para obter o conjunto de dados ordenado completo. É conhecido por ter uma complexidade de tempo de execução O(n log n), tornando-o muito eficiente para conjuntos de dados grandes. A ideia básica é que a divisão recursiva reduz o problema a metade do tamanho, e a combinação das soluções ordenadas é um processo linear simples.
+
+Quick Sort:
+O Quick Sort é um algoritmo de ordenação recursivo que escolhe um elemento do conjunto de dados como pivô, divide o conjunto de dados em duas partições em torno do pivô e, em seguida, ordena recursivamente as duas partições. A ideia é que o pivô divide o conjunto de dados em dois subconjuntos menores e, em seguida, cada subconjunto é ordenado independentemente. É conhecido por ter uma complexidade de tempo de execução médio O(n log n), tornando-o muito eficiente para conjuntos de dados grandes. No entanto, no pior caso, quando o pivô é escolhido de maneira inadequada, o Quick Sort pode ter uma complexidade de tempo de execução O(n^2).
+
+Heap Sort:
+O Heap Sort é um algoritmo de ordenação baseado em uma estrutura de dados chamada heap, que é uma árvore binária quase completa que satisfaz a propriedade heap. O Heap Sort constrói uma estrutura heap a partir do conjunto de dados, extrai o elemento raiz (que é sempre o maior elemento), reorganiza a estrutura heap e repete o processo até que todos os elementos estejam ordenados. É conhecido por ter uma complexidade de tempo de execução O(n log n) no pior caso, tornando-o muito eficiente para conjuntos de dados grandes. No entanto, o Heap Sort tem um desempenho ligeiramente pior em relação ao Quick Sort e Merge Sort em conjuntos de dados pequenos, devido ao seu alto custo de inicialização.
+
+Em geral, esses três algoritmos de ordenação são considerados mais eficientes em termos de tempo de execução do que os algoritmos de ordenação simples mencionados anteriormente. A escolha do algoritmo adequado depende do tamanho do conjunto de dados, da distribuição dos valores e dos recursos disponíveis.
+
+---
+
+## Perguntas ##
+
+* Quais são as principais diferenças entre o algoritmo de ordenação Bubble Sort e o Quick Sort?
+* Como funciona o algoritmo de ordenação Merge Sort e qual sua complexidade de tempo?
+
