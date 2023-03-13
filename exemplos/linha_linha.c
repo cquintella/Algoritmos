@@ -17,3 +17,8 @@ void lerArquivoLinhaPorLinha(const char *nomeArquivo) {
 
     fclose(arquivo);
 }
+
+int main() {
+    lerArquivoLinhaPorLinha("arquivo.txt");
+    return 0;
+}
