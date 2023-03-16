@@ -4,9 +4,8 @@
 #include <string.h>
 
 #define MAX_NOMES 50
-#define MAX_TAM_NOME 30
 #define MAX_SOBRENOMES 50
-#define MAX_TAM_SOBRENOME 20
+
 
 // Struct que armazena nome e sobrenome gerados aleatoriamente
 typedef struct {
@@ -60,7 +59,21 @@ int main(){
         "Lacerda", "Miranda", "Assis", "Ramos"
     };
 
-     //...
+    char *cor_de_olho[] = {"castanho", "verde", "azul", "cinza", "preto"};
+    
+    char *cor_de_cabelo[] = {"preto", "castanho", "loiro", "ruivo", "grisalho"};
+    char *tipo_de_cabelo[] = {"liso", "ondulado", "cacheado"};
+    char *tipo_de_corte[]={"careca","moecano","sarará","longo","escovinha","social","emo"};
+    char *pele[]={{"branco", "negro", "pardo"};
+    char *formato_rosto[]={"rosto fino", "rosto redondo"};
+    char *formato_nariz[]={"nariz largo", "nariz pontudo", "nariz pequeno", "nariz grande"};
+    char *formato_boca[]={"lábios finos", "labios grossos","boca grande","boca pequena"};
+    char *formato_olhos[]={"grandes","puxados","separados","pequenos","juntos"};
+    char *formato_queixo[]={"grande","fino","largo","pequeno"};
+    char *formato_testa[]={"curta","alta","grande","saliente"};             
+    char *caracteristicas_faciais[]={"tatuagem", "sardas", "espinhas", "vitiligo", "rugas"} ;              
+    
+
       
       return 0;
     }
