@@ -58,36 +58,48 @@ nodo_t *procurar_dado(int dado, nodo_t *nodo_inicial){
 
 
 
+// funcao para deletar nodo na lista encadeada
+int deletar_nodo(nodo_t *nodo_a_deletar, nodo_t **nodo_inicial) {
+    nodo_t *nodo_atual;
+    nodo_t *nodo_anterior;
 
+    nodo_atual = *nodo_inicial;
+    nodo_anterior = NULL;
 
+    if (nodo_atual == NULL) { // Recebemos um nodo vazio
+        printf("Nodo não encontrado na lista.\n");
+        return -1;
+    }
 
+    printf("Procurando: %p.\n", nodo_a_deletar);
+    while (nodo_atual != NULL && nodo_atual != nodo_a_deletar) {
+        imprimir_nodo(nodo_atual);
+        nodo_anterior = nodo_atual;
+        nodo_atual = nodo_atual->proximo;
+    }
 
+    if (nodo_atual == *nodo_inicial) { // deletar o primeiro nodo
+        *nodo_inicial = nodo_atual->proximo;
+        free(nodo_atual);
+    } else if (nodo_atual == nodo_a_deletar) {
+        nodo_anterior->proximo = nodo_atual->proximo;
+        free(nodo_atual);
+    } else {
+        return -1;
+    }
 
-void deletar_nodo(nodo_t *nodo, nodo_t **nodo_inicial){
-  nodo_t *nodo_atual = nodo_inicial;
-  nodo_t *nodo_anterior = NULL;
-
-  while(nodo_atual != NULL && nodo_atual != nodo) {
-    nodo_anterior = nodo_atual;
-    nodo_atual = nodo_atual->proximo;
-  }
-
-  if (nodo_atual == NULL) {
-    printf("Nodo não encontrado na lista.\n");
-    return;
-  }
-
-  if (nodo_anterior == NULL) {
-    // Se o nó a ser removido é o primeiro da lista
-    nodo_inicial = nodo_atual->proximo;
-  } else {
-    // Ajusta o ponteiro do nó anterior para apontar para o próximo nó após o nó a ser removido
-    nodo_anterior->proximo = nodo_atual->proximo;
-  }
-
-  free(nodo_atual);
+    return 0;
 }
 
+imprimir_lista(nodo_t *nodo_inicial){
+  nodo_t *nodo_atual;
+  nodo_atual=nodo_inicial;
+  printf("IMPRIMINDO A LISTA\n");
+  while(nodo_atual!=NULL){
+     imprimir_nodo(nodo_atual);
+     nodo_atual=nodo_atual->proximo;
+  }
+}
 int main(){
     nodo_t *nodo_inicial = NULL;  // Ou chame de nó_cabeça
     nodo_t *nodo_final = nodo_inicial;
@@ -107,6 +119,8 @@ int main(){
     dado = 5;
     inserir_nodo(&nodo_inicial, dado);
 
+    imprimir_lista(nodo_inicial);
+  
     nodo_t *nodo_a_deletar;
     nodo_a_deletar=procurar_dado(5, nodo_inicial);
     
@@ -116,6 +130,15 @@ int main(){
     } else { 
       printf("Valor não encontrado.\n");
     }
+    imprimir_lista(nodo_inicial);
+
+    nodo_a_deletar=procurar_dado(10, nodo_inicial);
+        if (nodo_a_deletar !=NULL){
+      deletar_nodo(nodo_a_deletar, &nodo_inicial);
+    } else { 
+      printf("Valor não encontrado.\n");
+    }
+    imprimir_lista(nodo_inicial);
   
     return 0;
 }
