@@ -42,6 +42,28 @@ float quartile(float *arr, int n, int quart) {
     }
 }
 
+
+float max_val(float arr[], int n) {
+    float max = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+float min_val(float arr[], int n) {
+    float min = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] < min) {
+            min = arr[i];
+        }
+    }
+    return min;
+}
+
+
 int main() {
     int n;
     printf("Entre com o tamanho do vetor: ");
@@ -53,7 +75,10 @@ int main() {
     for (int i = 0; i < n; i++) {
         scanf("%f", &arr[i]);
     }
-
+    
+    
+    printf("Maior valor: %.2f\n", max_val(arr, n));
+    printf("Menor valor: %.2f\n", min_val(arr, n));
     printf("Média: %.2f\n", mean(arr, n));
     printf("Desvio padrão: %.2f\n", stdev(arr, n));
     printf("Quartil 1: %.2f\n", quartile(arr, n, 1));
