@@ -14,7 +14,7 @@ void initialize_grid(char grid[TAMANHO_GRID][TAMANHO_GRID]) {
 }
 
 void print_grid(char grid[TAMANHO_GRID][TAMANHO_GRID], int pos_x, int pos_y) {
-    system("clear"); // Limpar a tela (Linux/Mac)
+     system("clear"); // Limpar a tela (Linux/Mac)
     //system("cls"); // Limpar a tela (Windows)
     for (int i = 0; i < TAMANHO_GRID; i++) {
         for (int j = 0; j < TAMANHO_GRID; j++) {
@@ -46,12 +46,10 @@ void take_step(char grid[TAMANHO_GRID][TAMANHO_GRID], int *pos_x, int *pos_y) {
             if (*pos_x > 0) new_pos_x = *pos_x - 1;
             break;
     }
-    
-    if (grid[new_pos_y][new_pos_x] == ' ') {
-        grid[*pos_y][*pos_x] = '.';
-        *pos_x = new_pos_x;
-        *pos_y = new_pos_y;
-    }
+
+    grid[*pos_y][*pos_x] = '.'; // Marcar a célula atual como visitada
+    *pos_x = new_pos_x;
+    *pos_y = new_pos_y;
 }
 
 int main() {
@@ -67,7 +65,7 @@ int main() {
     while (steps < 1000) {
         print_grid(grid, pos_x, pos_y);
         take_step(grid, &pos_x, &pos_y);
-        usleep(100000); // Esperar 100 milissegundos
+        usleep(1000);// Esperar 100 milissegundos
         steps++;
         printf("Passos dados: %d", steps);
     }
