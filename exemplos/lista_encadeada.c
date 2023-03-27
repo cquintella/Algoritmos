@@ -1,144 +1,127 @@
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
-// Define a estrutura do nodo
-typedef struct nodo{
-    int dado;
-    struct nodo *proximo;
-} nodo_t;
+#define SIZE_DESCRICAO 20
+
+struct dado_t {
+    int chave;
+    char descricao[SIZE_DESCRICAO];
+};
+
+struct nodo_t {
+    struct dado_t *dado;
+    struct nodo_t *proximo;
+};
 
 
-void imprimir_nodo(nodo_t *nodo){
-      printf("nodo em: %p\t dado: %d\t proximo: %p.\n", nodo, nodo->dado, nodo->proximo);  
-}
 
-nodo_t *criar_nodo(int dado){
-    nodo_t *novo_nodo = malloc(sizeof(nodo_t));
+void insere_nodo(struct nodo_t **cabeca, struct dado_t *dado){
+    struct nodo_t *novo_nodo = malloc(sizeof(struct nodo_t));
+    if (novo_nodo == NULL){ // verificação de erro na alocação de memória
+        printf("Erro ao alocar memória.\n");
+        exit(-1);
+    }
     novo_nodo->dado = dado;
-    novo_nodo->proximo = NULL;
-    return novo_nodo;
+    novo_nodo->proximo = *cabeca;
+    *cabeca = novo_nodo;
 }
 
-void inserir_nodo(nodo_t **nodo_inicial, int dado) {
-    printf("Inserindo um novo nodo, valor: %d.\n", dado);
-  
-    nodo_t *novo_nodo = criar_nodo(dado);
-    
-    if (*nodo_inicial == NULL) {   // criando a lista
-        *nodo_inicial = novo_nodo;
-        imprimir_nodo(novo_nodo);
-    } else {
-        nodo_t *nodo_atual=*nodo_inicial;
-        while (nodo_atual->proximo != NULL) { // procura o fim da lista
-            nodo_atual=nodo_atual->proximo;
-        }
-        nodo_atual->proximo=novo_nodo;
-        imprimir_nodo(novo_nodo);
-        
+int deleta_nodo(struct nodo_t **cabeca, struct nodo_t *nodo_a_deletar){
+    struct nodo_t **corrente = cabeca;
+    while (*corrente != NULL && *corrente != nodo_a_deletar){
+        corrente = &(*corrente)->proximo;
     }
-}
-
-nodo_t *procurar_dado(int dado, nodo_t *nodo_inicial){
-// A função retorna um ponteiro para o nó que contém o dado procurado ou NULL se o dado não for encontrado na lista.
-  
-    nodo_t *nodo_atual = nodo_inicial;
-    
-    while (nodo_atual != NULL) {
-        if (nodo_atual->dado == dado) {
-            printf ("Achado em nodo: %p.\n", nodo_atual);
-            return nodo_atual;
-        }
-        nodo_atual = nodo_atual->proximo;
-    }
-    
-    // Se chegou aqui, não encontrou o dado
-    return NULL;
-    printf("nodo não achado.\n");
-}
-
-
-
-// funcao para deletar nodo na lista encadeada
-int deletar_nodo(nodo_t *nodo_a_deletar, nodo_t **nodo_inicial) {
-    nodo_t *nodo_atual;
-    nodo_t *nodo_anterior;
-
-    nodo_atual = *nodo_inicial;
-    nodo_anterior = NULL;
-
-    if (nodo_atual == NULL) { // Recebemos um nodo vazio
-        printf("Nodo não encontrado na lista.\n");
+    if (*corrente == NULL){
+        printf("nodo no endereço %p não foi encontrado.\n", nodo_a_deletar);
         return -1;
     }
-
-    printf("Procurando: %p.\n", nodo_a_deletar);
-    while (nodo_atual != NULL && nodo_atual != nodo_a_deletar) {
-        imprimir_nodo(nodo_atual);
-        nodo_anterior = nodo_atual;
-        nodo_atual = nodo_atual->proximo;
-    }
-
-    if (nodo_atual == *nodo_inicial) { // deletar o primeiro nodo
-        *nodo_inicial = nodo_atual->proximo;
-        free(nodo_atual);
-    } else if (nodo_atual == nodo_a_deletar) {
-        nodo_anterior->proximo = nodo_atual->proximo;
-        free(nodo_atual);
-    } else {
-        return -1;
-    }
-
+    *corrente = nodo_a_deletar->proximo;
+    free(nodo_a_deletar->dado);
+    free(nodo_a_deletar);
     return 0;
 }
 
-imprimir_lista(nodo_t *nodo_inicial){
-  nodo_t *nodo_atual;
-  nodo_atual=nodo_inicial;
-  printf("IMPRIMINDO A LISTA\n");
-  while(nodo_atual!=NULL){
-     imprimir_nodo(nodo_atual);
-     nodo_atual=nodo_atual->proximo;
-  }
+void imprime_dado(struct dado_t *dado){
+    printf("chave:    \t%d\n", dado->chave);
+    printf("descrição:\t%s\n", dado->descricao);
 }
+
+struct nodo_t *procura(struct nodo_t *cabeca,int item){
+    printf("procurando item: %d, a partir de: %p.\n", item, cabeca);
+    struct nodo_t *corrente;
+    corrente=cabeca;
+    while (corrente->dado->chave!=item && corrente->proximo!=NULL){
+      corrente=corrente->proximo;
+    }
+    if (corrente->dado->chave==item){
+      printf("Valor procurado está no nodo em: %p.\n",corrente);
+      return corrente;
+    }
+    return NULL; 
+}
+
 int main(){
-    nodo_t *nodo_inicial = NULL;  // Ou chame de nó_cabeça
-    nodo_t *nodo_final = nodo_inicial;
-    printf("INICIANDO A LISTA\n");
-    printf("O tamanho de um nodo é: %lu bytes\n\n", sizeof(nodo_t));
 
+    //TESTANDO A LISTA ENCADEADA
+
+    char valor[SIZE_DESCRICAO];
+    struct dado_t *novo_dado;
     
-    int dado = 10;
-    inserir_nodo(&nodo_inicial, dado);
+    struct nodo_t *cabeca;
+   
+    cabeca=NULL;    
 
-    dado = 20;
-    inserir_nodo(&nodo_inicial, dado);
-
-    dado = 5;
-    inserir_nodo(&nodo_inicial, dado);
-
-    dado = 5;
-    inserir_nodo(&nodo_inicial, dado);
-
-    imprimir_lista(nodo_inicial);
-  
-    nodo_t *nodo_a_deletar;
-    nodo_a_deletar=procurar_dado(5, nodo_inicial);
-    
-    
-    if (nodo_a_deletar !=NULL){
-      deletar_nodo(nodo_a_deletar, &nodo_inicial);
-    } else { 
-      printf("Valor não encontrado.\n");
+    // CRIA REGISTROS E INSERE
+    novo_dado=malloc(sizeof(struct dado_t));
+    if (novo_dado==NULL) {
+        printf("Erro ao alocar memória.\n");
+        exit(-1);
     }
-    imprimir_lista(nodo_inicial);
+    printf("novo_dado => %p.\n", novo_dado);
+    novo_dado->chave=1;
+    strcpy(novo_dado->descricao,"descricao do item 1");
+    imprime_dado(novo_dado);
+    insere_nodo(&cabeca, novo_dado);
 
-    nodo_a_deletar=procurar_dado(10, nodo_inicial);
-        if (nodo_a_deletar !=NULL){
-      deletar_nodo(nodo_a_deletar, &nodo_inicial);
-    } else { 
-      printf("Valor não encontrado.\n");
+    novo_dado=malloc(sizeof(struct dado_t));
+    novo_dado->chave=2;
+    strcpy(novo_dado->descricao,"descricao do item 2");
+    imprime_dado(novo_dado);
+    insere_nodo(&cabeca, novo_dado);
+
+    novo_dado=malloc(sizeof(struct dado_t));
+    novo_dado->chave=3;
+    strcpy(novo_dado->descricao,"descricao do item 3");
+    imprime_dado(novo_dado);
+    insere_nodo(&cabeca, novo_dado);
+ 
+    // PROCURA E APAGA
+    struct nodo_t *nodo_procurado;
+
+    nodo_procurado=procura(cabeca, 1);
+    if (nodo_procurado==NULL){
+        printf("Valor não encontrado.\n");
+    } else {
+        deleta_nodo(&cabeca, nodo_procurado);
     }
-    imprimir_lista(nodo_inicial);
-  
+
+    nodo_procurado=procura(cabeca, 2);
+    if (nodo_procurado==NULL){
+        printf("Valor não encontrado.\n");
+    } else {
+        deleta_nodo(&cabeca, nodo_procurado);
+    }
+
+    nodo_procurado=procura(cabeca, 3);
+    if (nodo_procurado==NULL){
+        printf("Valor não encontrado.\n");
+    } else {
+        deleta_nodo(&cabeca, nodo_procurado);
+    }
+
     return 0;
+
 }
+
+
