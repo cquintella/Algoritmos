@@ -61,6 +61,20 @@ struct nodo_t *procura(struct nodo_t *cabeca,int item){
     return NULL; 
 }
 
+void insere_no_final(struct nodo_t **cabeca, struct nodo_t *dado){
+    dado->proximo = NULL;
+    if (*cabeca == NULL){ // lista vazia
+        *cabeca = dado;
+    } else {
+        struct nodo_t *ultimo = *cabeca;
+        while (ultimo->proximo != NULL){
+            ultimo = ultimo->proximo;
+        }
+        ultimo->proximo = dado;
+    }
+}
+
+
 int main(){
 
     //TESTANDO A LISTA ENCADEADA
