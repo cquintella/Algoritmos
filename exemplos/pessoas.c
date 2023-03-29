@@ -13,15 +13,15 @@ typedef struct {
     char sobrenome[TAM_NOME];
 } nome_pessoa_t;
 
-typedef enum gender{
+typedef enum genero{
     masculino,
     feminino
-    } gender_t
+    } genero_t;
         
-nome_pessoa_t gerar_nome( gender_t gender){
+nome_pessoa_t gerar_nome( genero_t genero){
         
         
-    char nomes_masc[TOTAL_NOMES] = {
+    char *nomes_masc[TOTAL_NOMES] = {
         "João", "Pedro", "Lucas", "Mateus", "Gabriel", "Felipe", "Rafael",
         "Gustavo", "Leonardo", "Bruno", "Thiago", "Rodrigo", "Vinicius",
         "Luciano", "Daniel", "Lucas", "Fernando", "Marcelo", "Lucas",
@@ -32,7 +32,7 @@ nome_pessoa_t gerar_nome( gender_t gender){
         "Davi", "Elias", "Fabrício", "Geraldo", "Heitor"
     };
 
-    char* nomes_femi[TOTAL_NOMES] = {
+    char *nomes_femi[TOTAL_NOMES] = {
         "Ana", "Beatriz", "Carla", "Diana", "Elena", "Fernanda", "Gabriela",
         "Helena", "Isabela", "Jéssica", "Karina", "Lara", "Mariana",
         "Natália", "Olivia", "Patrícia", "Raquel", "Sara", "Tatiana",
@@ -60,10 +60,10 @@ nome_pessoa_t gerar_nome( gender_t gender){
    char segundo_nome[TAM_NOME];
         
    strcpy(segundo_nome, sobrenomes[rand()%TOTAL_NOMES]);
-        
-   if (gender == masculino) {
+     
+   if (genero == masculino) {
             strcpy(primeiro_nome, nomes_masc[rand()%TOTAL_NOMES]);
-   else{
+   }else{
              strcpy(primeiro_nome, nomes_femi[rand()%TOTAL_NOMES]);
    }
         
@@ -76,25 +76,25 @@ nome_pessoa_t gerar_nome( gender_t gender){
 typedef struct car_fisicas{
     char *cor_de_olho;
     char *cor_de_cabelo;
-    char *tipo_de_dabelo;
+    char *tipo_de_cabelo;
     char *tipo_de_corte;
-    char *tom_pelo;
+    char *tom_de_pele;
     char *formato_rosto;
-    char *format_nariz;
+    char *formato_nariz;
     char *formato_boca;
     char *formato_olhos;
     char *formato_queixo;
     char *formato_testa;
-    char *car_faciais
+    char *car_faciais;
     
-} car_fisicas_t
+} car_fisicas_t;
 
 car_fisicas_t gerar_características_físicas(){
     char *cor_de_olho[] = {"castanho", "verde", "azul", "cinza", "preto"};
     char *cor_de_cabelo[] = {"preto", "castanho", "loiro", "ruivo", "grisalho"};
     char *tipo_de_cabelo[] = {"liso", "ondulado", "cacheado"};
     char *tipo_de_corte[]={"careca","moecano","sarará","longo","escovinha","social","emo"};
-    char *pele[]={{"branco", "negro", "pardo"};
+    char *tom_de_pele[]={"branco", "negro", "pardo"};
     char *formato_rosto[]={"rosto fino", "rosto redondo"};
     char *formato_nariz[]={"nariz largo", "nariz pontudo", "nariz pequeno", "nariz grande"};
     char *formato_boca[]={"lábios finos", "labios grossos","boca grande","boca pequena"};
@@ -104,12 +104,11 @@ car_fisicas_t gerar_características_físicas(){
     char *car_faciais[]={"tatuagem", "sardas", "espinhas", "vitiligo", "rugas"} ;   
     
     car_fisicas_t car_fisicas;
-    car_fisicas_t car_fisicas;
     car_fisicas.cor_de_olho = cor_de_olho[rand() % 5];
     car_fisicas.cor_de_cabelo = cor_de_cabelo[rand() % 5];
     car_fisicas.tipo_de_cabelo = tipo_de_cabelo[rand() % 3];
     car_fisicas.tipo_de_corte = tipo_de_corte[rand() % 7];
-    car_fisicas.tom_pelo = tom_pelo[rand() % 3];
+    car_fisicas.tom_de_pele = tom_de_pele[rand() % 3];
     car_fisicas.formato_rosto = formato_rosto[rand() % 2];
     car_fisicas.formato_nariz = formato_nariz[rand() % 4];
     car_fisicas.formato_boca = formato_boca[rand() % 4];
@@ -124,23 +123,22 @@ car_fisicas_t gerar_características_físicas(){
 
 int main(){
     car_fisicas_t car_fisicas = gerar_características_físicas();
-    nome_pessoa_t nome_completo = gerar_nome(masculino);
+    genero_t genero=masculino;
+    nome_pessoa_t nome_completo = gerar_nome(genero);
 
     printf("Nome: %s %s\n", nome_completo.nome, nome_completo.sobrenome);
-    printf("Características físicas:\n");
-    printf("Cor dos olhos: %s\n", car_fisicas.cor_de_olho);
-    printf("Cor do cabelo: %s\n", car_fisicas.cor_de_cabelo);
-    printf("Tipo de cabelo: %s\n", car_fisicas.tipo_de_cabelo);
-    printf("Tipo de corte: %s\n", car_fisicas.tipo_de_corte);
-    printf("Tom de pele: %s\n", car_fisicas.tom_pelo);
-    printf("Formato de rosto: %s\n", car_fisicas.formato_rosto);
-    printf("Formato de nariz: %s\n", car_fisicas.formato_nariz);
-    printf("Formato de boca: %s\n", car_fisicas.formato_boca);
-    printf("Formato de olhos: %s\n", car_fisicas.formato_olhos);
-    printf("Formato de queixo: %s\n", car_fisicas.formato_queixo);
-    printf("Formato de testa: %s\n", car_fisicas.formato_testa);
+    printf("\n Criar uma foto de rosto de um jogador de futebol no formato 3x4 mostrando do peito para cimai, fundo da foto é verde, jogador com camisa amarela com as seguintes caracteristicas físicas: ");
+    printf("Cor dos olhos: %s, ", car_fisicas.cor_de_olho);
+    printf("cabelo de cor %s, ", car_fisicas.cor_de_cabelo);
+    printf("no estilo: %s, ", car_fisicas.tipo_de_cabelo);
+    printf("Tom de pele: %s, ", car_fisicas.tom_de_pele);
+    printf("Formato de rosto: %s, ", car_fisicas.formato_rosto);
+    printf("Formato de nariz: %s, ", car_fisicas.formato_nariz);
+    printf("Formato de boca: %s, ", car_fisicas.formato_boca);
+    printf("Formato de olhos: %s, ", car_fisicas.formato_olhos);
+    printf("Formato de queixo: %si, ", car_fisicas.formato_queixo);
+    printf("Formato de testa: %s.", car_fisicas.formato_testa);
     printf("Características faciais: %s\n", car_fisicas.car_faciais);
 
     return 0;
 }
-
