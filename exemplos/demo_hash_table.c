@@ -241,7 +241,7 @@ int main(){
     imprimir_lista(head);
     imprimir_tabela_hash(hash_table, SIZE_HASH);
     printf("Buscando: Marcelo Santos: %p\n",buscar_contato("Marcelo","Santos", hash_table));
-    excluir_contato(buscar_contato("Marcelo","Santos", hash_table),hash_table,head);
+    excluir_contato(buscar_contato("Marcelo","Santos", hash_table),hash_table,&head);
     imprimir_lista(head);
     imprimir_tabela_hash(hash_table, SIZE_HASH);
     return 0;
