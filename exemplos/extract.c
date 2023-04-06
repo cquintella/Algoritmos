@@ -44,3 +44,5 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
+
+//gcc -o extract_text extract_text.c `pkg-config --cflags --libs poppler-glib`
